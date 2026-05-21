@@ -1,0 +1,36 @@
+package com.swissroute.dto;
+
+import java.time.LocalDate;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "DTO para representar los datos de usuario en las respuestas")
+public class UserResponseDTO {
+
+    @Schema(description = "ID único del usuario", example = "1")
+    private Long id;
+
+    @Schema(description = "Nombre del usuario", example = "Juan")
+    private String name;
+
+    @Schema(description = "Correo electrónico del usuario", example = "juan@gmail.com")
+    private String email;
+
+    @Schema(description = "Ciudad base del usuario")
+    private String ciudadBase;
+
+    @Schema(description = "Fecha de registro del usuario", example = "08/04/2025")
+    private LocalDate signUpDate;
+
+    @Schema(description = "Rol asignado al usuario")
+    private RoleResponseDTO role;
+
+
+
+}
