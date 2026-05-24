@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.swissroute.dto.AuthRequestDTO;
-import com.swissroute.dto.AuthResponseDTO;
+import com.swissroute.dto.request.AuthRequestDTO;
+import com.swissroute.dto.response.AuthResponseDTO;
 import com.swissroute.service.use_cases.AuthUseCase;
 import com.swissroute.util.JwtUtils;
 

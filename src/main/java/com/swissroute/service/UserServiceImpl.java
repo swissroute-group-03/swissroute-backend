@@ -7,8 +7,8 @@ import com.swissroute.exceptionHandler.exceptions.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.swissroute.dto.UserRequestDTO;
-import com.swissroute.dto.UserResponseDTO;
+import com.swissroute.dto.request.UserRequestDTO;
+import com.swissroute.dto.response.UserResponseDTO;
 import com.swissroute.mapper.UserMapper;
 import com.swissroute.model.Role;
 import com.swissroute.model.User;

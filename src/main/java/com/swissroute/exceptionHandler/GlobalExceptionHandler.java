@@ -3,6 +3,7 @@ package com.swissroute.exceptionHandler;
 import java.time.LocalDateTime;
 
 import com.swissroute.exceptionHandler.exceptions.ConflictException;
+import com.swissroute.exceptionHandler.exceptions.TransportApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -69,6 +70,23 @@ public class GlobalExceptionHandler {
                         request.getRequestURI()
                 ),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleTransportApiException(
+            TransportApiException ex,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        ex.getStatus(),
+                        "External API Error",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ),
+                HttpStatus.valueOf(ex.getStatus())
         );
     }
 }

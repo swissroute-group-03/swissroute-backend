@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.swissroute.dto.AuthRequestDTO;
-import com.swissroute.dto.AuthResponseDTO;
+import com.swissroute.dto.request.AuthRequestDTO;
+import com.swissroute.dto.response.AuthResponseDTO;
 import com.swissroute.service.use_cases.AuthUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
