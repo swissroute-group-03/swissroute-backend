@@ -1,4 +1,4 @@
-package com.swissroute;
+package com.swissroute.integration;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.swissroute.config;
+package com.swissroute.integration;
 
+import com.swissroute.config.WebClientConfig;
 import com.swissroute.exceptionHandler.exceptions.TransportApiException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
