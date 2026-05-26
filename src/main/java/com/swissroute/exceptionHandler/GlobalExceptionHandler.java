@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.swissroute.exceptionHandler.exceptions.ResourceNotFoundException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -100,6 +101,24 @@ public class GlobalExceptionHandler {
                         request.getRequestURI()
                 ),
                 HttpStatus.valueOf(ex.getStatus())
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException ex,
+            HttpServletRequest request
+    ) {
+        String mensaje = "El parámetro '" + ex.getName() + "' debe ser un valor numérico válido";
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
+                        mensaje,
+                        request.getRequestURI()
+                ),
+                HttpStatus.BAD_REQUEST
         );
     }
 }
