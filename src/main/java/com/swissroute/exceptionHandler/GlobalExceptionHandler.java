@@ -3,6 +3,7 @@ package com.swissroute.exceptionHandler;
 import java.time.LocalDateTime;
 
 import com.swissroute.exceptionHandler.exceptions.ConflictException;
+import com.swissroute.exceptionHandler.exceptions.TransportApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
     
     @ExceptionHandler
-    public ResponseEntity<ErrorDetails> handleConflictException(ResourceNotFoundException resourceNotFoundException, HttpServletRequest request){
+    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException resourceNotFoundException, HttpServletRequest request){
         return new ResponseEntity<>(
             new ErrorDetails(
                 LocalDateTime.now(),
@@ -27,6 +28,19 @@ public class GlobalExceptionHandler {
                 resourceNotFoundException.getMessage(),
                 request.getRequestURI()
             ), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException ex, HttpServletRequest request){
+        return new ResponseEntity<>(
+            new ErrorDetails(
+                LocalDateTime.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Forbidden",
+                "Acceso denegado: No tienes permisos para realizar esta acción",
+                request.getRequestURI()
+            ), HttpStatus.FORBIDDEN
+        );
     }
 
     @ExceptionHandler
@@ -69,6 +83,23 @@ public class GlobalExceptionHandler {
                         request.getRequestURI()
                 ),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleTransportApiException(
+            TransportApiException ex,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        ex.getStatus(),
+                        "External API Error",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ),
+                HttpStatus.valueOf(ex.getStatus())
         );
     }
 }

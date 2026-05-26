@@ -1,4 +1,4 @@
-package com.swissroute.dto;
+package com.swissroute.dto.response;
 
 import java.time.LocalDate;
 
