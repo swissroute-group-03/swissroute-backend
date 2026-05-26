@@ -51,11 +51,11 @@ class StationServiceImplTest {
         Map<String, Object> station = new HashMap<>();
         station.put("id", "008503000");
         station.put("name", "Zurich HB");
-        station.put("coordinate", Map.of("x", 8.540192, "y", 47.378177));
+        station.put("coordinate", Map.of("x", 47.378177, "y", 8.540192));
 
         mockSuccessResponse(Map.of("stations", List.of(station)));
 
-        List<StationResponseDTO> result = stationService.buscarEstaciones("Zurich");
+        List<StationResponseDTO> result = stationService.buscarEstaciones("Zurich", 15);
 
         assertEquals(1, result.size());
         assertEquals("008503000", result.get(0).getId());
@@ -73,7 +73,7 @@ class StationServiceImplTest {
         mockSuccessResponse(Map.of("stations", List.of(item)));
 
         assertThrows(ResourceNotFoundException.class,
-                () -> stationService.buscarEstaciones("xyz"));
+                () -> stationService.buscarEstaciones("xyz", 15));
     }
 
     @Test
@@ -81,7 +81,7 @@ class StationServiceImplTest {
         mockSuccessResponse(Map.of("stations", List.of()));
 
         assertThrows(ResourceNotFoundException.class,
-                () -> stationService.buscarEstaciones("xyz"));
+                () -> stationService.buscarEstaciones("xyz", 15));
     }
 
     @Test
@@ -91,7 +91,7 @@ class StationServiceImplTest {
         mockSuccessResponse(response);
 
         assertThrows(ResourceNotFoundException.class,
-                () -> stationService.buscarEstaciones("xyz"));
+                () -> stationService.buscarEstaciones("xyz", 15));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -106,7 +106,7 @@ class StationServiceImplTest {
         when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
 
         TransportApiException ex = assertThrows(TransportApiException.class,
-                () -> stationService.buscarEstaciones("Zurich"));
+                () -> stationService.buscarEstaciones("Zurich", 15));
         assertEquals(503, ex.getStatus());
     }
 
@@ -115,7 +115,7 @@ class StationServiceImplTest {
         Map<String, Object> s1 = new HashMap<>();
         s1.put("id", "8503000");
         s1.put("name", "Zurich HB");
-        s1.put("coordinate", Map.of("x", 8.540, "y", 47.378));
+        s1.put("coordinate", Map.of("x", 47.378, "y", 8.540));
 
         Map<String, Object> s2 = new HashMap<>();
         s2.put("id", "8503010");
@@ -123,10 +123,76 @@ class StationServiceImplTest {
 
         mockSuccessResponse(Map.of("stations", List.of(s1, s2)));
 
-        List<StationResponseDTO> result = stationService.buscarEstaciones("Zurich");
+        List<StationResponseDTO> result = stationService.buscarEstaciones("Zurich", 15);
 
         assertEquals(2, result.size());
         assertEquals("Zurich HB", result.get(0).getNombre());
         assertEquals("Zurich Stadelhofen", result.get(1).getNombre());
+    }
+
+    @Test
+    void shouldReturnStationsWithDistanceWhenSearchingByCoordinates() {
+        Map<String, Object> station = new HashMap<>();
+        station.put("id", "008503000");
+        station.put("name", "Zurich HB");
+        station.put("coordinate", Map.of("x", 47.378177, "y", 8.540192));
+        station.put("distance", 125.0);
+
+        mockSuccessResponse(Map.of("stations", List.of(station)));
+
+        List<StationResponseDTO> result = stationService.buscarEstacionesPorCoordenadas(47.38, 8.54, 15);
+
+        assertEquals(1, result.size());
+        assertEquals("008503000", result.get(0).getId());
+        assertEquals("Zurich HB", result.get(0).getNombre());
+        assertEquals(47.378177, result.get(0).getLatitud());
+        assertEquals(8.540192, result.get(0).getLongitud());
+        assertEquals(125.0, result.get(0).getDistance());
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenNoStationsFoundByCoordinates() {
+        mockSuccessResponse(Map.of("stations", List.of()));
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> stationService.buscarEstacionesPorCoordenadas(47.0, 8.0, 15));
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenStationsIsNullByCoordinates() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("stations", null);
+        mockSuccessResponse(response);
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> stationService.buscarEstacionesPorCoordenadas(47.0, 8.0, 15));
+    }
+
+    @Test
+    void shouldThrowNotFoundWhenStationsHaveNoIdByCoordinates() {
+        Map<String, Object> item = new HashMap<>();
+        item.put("id", null);
+        item.put("name", "XYZ Construction Sarl");
+
+        mockSuccessResponse(Map.of("stations", List.of(item)));
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> stationService.buscarEstacionesPorCoordenadas(47.0, 8.0, 15));
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Test
+    void shouldThrowServiceUnavailableWhenWebClientFailsByCoordinates() {
+        WebClient.RequestHeadersUriSpec uriSpec = mock(WebClient.RequestHeadersUriSpec.class);
+        WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
+
+        when(transportWebClient.get()).thenReturn(uriSpec);
+        when(uriSpec.uri(any(Function.class))).thenReturn(uriSpec);
+        when(uriSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
+
+        TransportApiException ex = assertThrows(TransportApiException.class,
+                () -> stationService.buscarEstacionesPorCoordenadas(47.0, 8.0, 15));
+        assertEquals(503, ex.getStatus());
     }
 }
