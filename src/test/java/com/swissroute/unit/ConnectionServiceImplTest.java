@@ -81,7 +81,7 @@ class ConnectionServiceImplTest {
 
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
-        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null);
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null);
 
         assertEquals(1, result.size());
         ConnectionResponseDTO dto = result.get(0);
@@ -100,8 +100,8 @@ class ConnectionServiceImplTest {
     void shouldThrowNotFoundWhenConnectionsListIsEmpty() {
         mockSuccessResponse(Map.of("connections", List.of()));
 
-        assertThrows(ResourceNotFoundException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null));
+assertThrows(ResourceNotFoundException.class,
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
     }
 
     @Test
@@ -111,7 +111,7 @@ class ConnectionServiceImplTest {
         mockSuccessResponse(response);
 
         assertThrows(ResourceNotFoundException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null));
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -126,7 +126,7 @@ class ConnectionServiceImplTest {
         when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
 
         TransportApiException ex = assertThrows(TransportApiException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null));
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
         assertEquals(503, ex.getStatus());
     }
 
@@ -147,7 +147,7 @@ class ConnectionServiceImplTest {
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
         List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
-                "Lausanne", "Bern", "2026-05-29", "06:00", "ice");
+                "Lausanne", "Bern", "2026-05-29", "06:00", "ice", null);
 
         assertEquals(1, result.size());
         assertEquals("Lausanne", result.get(0).getOrigen());
@@ -171,11 +171,61 @@ class ConnectionServiceImplTest {
 
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
-        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null);
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null);
 
         assertEquals(1, result.size());
         assertEquals(1, result.get(0).getSecciones().size());
         assertEquals("Caminando", result.get(0).getSecciones().get(0).getTransporte());
         assertEquals("walk", result.get(0).getSecciones().get(0).getTipo());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void shouldPassViaParamsToApi() {
+        Map<String, Object> section = new HashMap<>();
+        section.put("departure", createDeparture("Lausanne", "2026-05-29T04:49:00+0200"));
+        section.put("arrival", createArrival("Bern", "2026-05-29T06:26:00+0200"));
+        section.put("journey", Map.of("category", "IC", "number", "1", "operator", "SBB"));
+
+        Map<String, Object> connection = new HashMap<>();
+        connection.put("from", Map.of("station", Map.of("name", "Lausanne")));
+        connection.put("to", Map.of("station", Map.of("name", "Bern")));
+        connection.put("duration", "00d01:37:00");
+        connection.put("products", List.of("IC 1"));
+        connection.put("sections", List.of(section));
+
+        mockSuccessResponse(Map.of("connections", List.of(connection)));
+
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
+                "Lausanne", "Bern", null, null, null, List.of("Olten"));
+
+        assertEquals(1, result.size());
+        assertEquals("Lausanne", result.get(0).getOrigen());
+        assertEquals("Bern", result.get(0).getDestino());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void shouldWorkWithoutVia() {
+        Map<String, Object> section = new HashMap<>();
+        section.put("departure", createDeparture("Lausanne", "2026-05-29T04:49:00+0200"));
+        section.put("arrival", createArrival("Bern", "2026-05-29T06:26:00+0200"));
+        section.put("journey", Map.of("category", "IC", "number", "1", "operator", "SBB"));
+
+        Map<String, Object> connection = new HashMap<>();
+        connection.put("from", Map.of("station", Map.of("name", "Lausanne")));
+        connection.put("to", Map.of("station", Map.of("name", "Bern")));
+        connection.put("duration", "00d01:37:00");
+        connection.put("products", List.of("IC 1"));
+        connection.put("sections", List.of(section));
+
+        mockSuccessResponse(Map.of("connections", List.of(connection)));
+
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
+                "Lausanne", "Bern", null, null, null, null);
+
+        assertEquals(1, result.size());
+        assertEquals("Lausanne", result.get(0).getOrigen());
+        assertEquals("Bern", result.get(0).getDestino());
     }
 }
