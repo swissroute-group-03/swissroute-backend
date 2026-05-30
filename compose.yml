@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: swissroute-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: swissroute_db
+      POSTGRES_USER: swissroute_user
+      POSTGRES_PASSWORD: swissroute
