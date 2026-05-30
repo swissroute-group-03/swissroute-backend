@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:lastest
+    image: postgres:latest
     container_name: swissroute-postgres
     ports:
       - "5432:5432"
