@@ -1,0 +1,18 @@
+package com.swissroute.dto.response;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ConnectionResponseDTO {
+    private String origen;
+    private String destino;
+    private String duracion;
+    private List<String> productos;
+    private List<SeccionDTO> secciones;
+}
