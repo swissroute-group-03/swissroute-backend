@@ -23,7 +23,7 @@ public class ConnectionServiceImpl implements ConnectionUseCase {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<ConnectionResponseDTO> buscarConexiones(String from, String to, String date, String time, String transportations) {
+    public List<ConnectionResponseDTO> buscarConexiones(String from, String to, String date, String time, String transportations, List<String> via) {
         try {
             Map<?, ?> response = transportWebClient.get()
                     .uri(uriBuilder -> {
@@ -33,6 +33,13 @@ public class ConnectionServiceImpl implements ConnectionUseCase {
                         if (date != null && !date.isBlank()) uriBuilder.queryParam("date", date);
                         if (time != null && !time.isBlank()) uriBuilder.queryParam("time", time);
                         if (transportations != null && !transportations.isBlank()) uriBuilder.queryParam("transportations", transportations);
+                        if (via != null && !via.isEmpty()) {
+                            if (via.size() == 1) {
+                                uriBuilder.queryParam("via", via.get(0));
+                            } else {
+                                via.forEach(stop -> uriBuilder.queryParam("via[]", stop));
+                            }
+                        }
                         return uriBuilder.build();
                     })
                     .retrieve()

@@ -25,10 +25,10 @@ public class WebClientConfig {
     @Bean
     public WebClient transportWebClient() {
         HttpClient httpClient = HttpClient.create()
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-                .responseTimeout(Duration.ofSeconds(5))
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
+                .responseTimeout(Duration.ofSeconds(10))
                 .doOnConnected(conn ->
-                        conn.addHandlerLast(new ReadTimeoutHandler(5, TimeUnit.SECONDS)));
+                        conn.addHandlerLast(new ReadTimeoutHandler(10, TimeUnit.SECONDS)));
 
         return WebClient.builder()
                 .baseUrl(transportApiBaseUrl)

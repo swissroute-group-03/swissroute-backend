@@ -2,6 +2,7 @@ package com.swissroute.exceptionHandler;
 
 import java.time.LocalDateTime;
 
+import com.swissroute.exceptionHandler.exceptions.BadRequestException;
 import com.swissroute.exceptionHandler.exceptions.ConflictException;
 import com.swissroute.exceptionHandler.exceptions.TransportApiException;
 import org.springframework.http.HttpStatus;
@@ -116,6 +117,23 @@ public class GlobalExceptionHandler {
                         HttpStatus.BAD_REQUEST.value(),
                         "Bad Request",
                         mensaje,
+                        request.getRequestURI()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleBadRequestException(
+            BadRequestException ex,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
+                        ex.getMessage(),
                         request.getRequestURI()
                 ),
                 HttpStatus.BAD_REQUEST
