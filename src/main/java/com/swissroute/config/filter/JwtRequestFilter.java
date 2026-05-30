@@ -44,6 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
 
                 String username = jwtUtils.extractUsername(decodedJWT);
+                Long userId = jwtUtils.extractUserId(decodedJWT);
                 String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
 
                 Collection<? extends GrantedAuthority> authorities = AuthorityUtils
@@ -51,7 +52,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-                Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                authentication.setDetails(userId);
                 context.setAuthentication(authentication);
 
                 SecurityContextHolder.setContext(context);
