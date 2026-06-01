@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.swissroute.mapper.SearchHistoryMapper;
+import com.swissroute.service.use_cases.SearchHistoryUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,12 +26,17 @@ import reactor.core.publisher.Mono;
 class ConnectionServiceImplTest {
 
     private WebClient transportWebClient;
+    private SearchHistoryUseCase searchHistoryUseCase;
+    private SearchHistoryMapper searchHistoryMapper;
+
     private ConnectionServiceImpl connectionService;
 
     @BeforeEach
     void setUp() {
         transportWebClient = mock(WebClient.class);
-        connectionService = new ConnectionServiceImpl(transportWebClient);
+        searchHistoryUseCase = mock(SearchHistoryUseCase.class);
+        searchHistoryMapper = mock(SearchHistoryMapper.class);
+        connectionService = new ConnectionServiceImpl(transportWebClient, searchHistoryUseCase, searchHistoryMapper);
     }
 
     private WebClient.RequestHeadersUriSpec mockUriSpec;
@@ -81,7 +88,7 @@ class ConnectionServiceImplTest {
 
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
-        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null);
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null, 1L);
 
         assertEquals(1, result.size());
         ConnectionResponseDTO dto = result.get(0);
@@ -101,7 +108,7 @@ class ConnectionServiceImplTest {
         mockSuccessResponse(Map.of("connections", List.of()));
 
 assertThrows(ResourceNotFoundException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null, 1L));
     }
 
     @Test
@@ -111,7 +118,7 @@ assertThrows(ResourceNotFoundException.class,
         mockSuccessResponse(response);
 
         assertThrows(ResourceNotFoundException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null, 1L));
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -126,7 +133,7 @@ assertThrows(ResourceNotFoundException.class,
         when(responseSpec.bodyToMono(Map.class)).thenReturn(Mono.error(new RuntimeException("Connection refused")));
 
         TransportApiException ex = assertThrows(TransportApiException.class,
-                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null));
+                () -> connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null, 1L));
         assertEquals(503, ex.getStatus());
     }
 
@@ -147,7 +154,7 @@ assertThrows(ResourceNotFoundException.class,
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
         List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
-                "Lausanne", "Bern", "2026-05-29", "06:00", "ice", null);
+                "Lausanne", "Bern", "2026-05-29", "06:00", "ice", null, 1L);
 
         assertEquals(1, result.size());
         assertEquals("Lausanne", result.get(0).getOrigen());
@@ -171,7 +178,7 @@ assertThrows(ResourceNotFoundException.class,
 
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
-        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null);
+        List<ConnectionResponseDTO> result = connectionService.buscarConexiones("Lausanne", "Bern", null, null, null, null, 1L);
 
         assertEquals(1, result.size());
         assertEquals(1, result.get(0).getSecciones().size());
@@ -197,7 +204,7 @@ assertThrows(ResourceNotFoundException.class,
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
         List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
-                "Lausanne", "Bern", null, null, null, List.of("Olten"));
+                "Lausanne", "Bern", null, null, null, List.of("Olten"), 1L);
 
         assertEquals(1, result.size());
         assertEquals("Lausanne", result.get(0).getOrigen());
@@ -222,7 +229,7 @@ assertThrows(ResourceNotFoundException.class,
         mockSuccessResponse(Map.of("connections", List.of(connection)));
 
         List<ConnectionResponseDTO> result = connectionService.buscarConexiones(
-                "Lausanne", "Bern", null, null, null, null);
+                "Lausanne", "Bern", null, null, null, null, 1L);
 
         assertEquals(1, result.size());
         assertEquals("Lausanne", result.get(0).getOrigen());
