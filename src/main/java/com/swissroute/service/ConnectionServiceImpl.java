@@ -3,6 +3,9 @@ package com.swissroute.service;
 import java.util.List;
 import java.util.Map;
 
+import com.swissroute.dto.request.SearchHistoryRequestDTO;
+import com.swissroute.mapper.SearchHistoryMapper;
+import com.swissroute.service.use_cases.SearchHistoryUseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,14 +19,18 @@ import com.swissroute.service.use_cases.ConnectionUseCase;
 public class ConnectionServiceImpl implements ConnectionUseCase {
 
     private final WebClient transportWebClient;
+    private final SearchHistoryUseCase searchHistoryUseCase;
+    private final SearchHistoryMapper searchHistoryMapper;
 
-    public ConnectionServiceImpl(WebClient transportWebClient) {
+    public ConnectionServiceImpl(WebClient transportWebClient, SearchHistoryUseCase searchHistoryUseCase, SearchHistoryMapper searchHistoryMapper) {
         this.transportWebClient = transportWebClient;
+        this.searchHistoryUseCase = searchHistoryUseCase;
+        this.searchHistoryMapper = searchHistoryMapper;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<ConnectionResponseDTO> buscarConexiones(String from, String to, String date, String time, String transportations, List<String> via) {
+    public List<ConnectionResponseDTO> buscarConexiones(String from, String to, String date, String time, String transportations, List<String> via, Long userId) {
         try {
             Map<?, ?> response = transportWebClient.get()
                     .uri(uriBuilder -> {
@@ -49,13 +56,18 @@ public class ConnectionServiceImpl implements ConnectionUseCase {
             List<Map<String, Object>> connections = (List<Map<String, Object>>) response.get("connections");
 
             if (connections == null || connections.isEmpty()) {
+                registerSearchHistory(from, to, 0, userId);
                 throw new ResourceNotFoundException(
                         "No se encontraron conexiones entre " + from + " y " + to);
             }
 
-            return connections.stream()
+            List<ConnectionResponseDTO> result = connections.stream()
                     .map(this::toResponseDTO)
                     .toList();
+
+            registerSearchHistory(from, to, result.size(), userId);
+
+            return result;
         } catch (ResourceNotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -122,5 +134,21 @@ public class ConnectionServiceImpl implements ConnectionUseCase {
         }
 
         return dto;
+    }
+
+    private void registerSearchHistory(
+            String from,
+            String to,
+            Integer resultCount,
+            Long userId
+    ) {
+        SearchHistoryRequestDTO request = searchHistoryMapper.toRequestDTO(
+                from,
+                to,
+                resultCount,
+                userId
+        );
+
+        searchHistoryUseCase.registerSearch(request);
     }
 }
