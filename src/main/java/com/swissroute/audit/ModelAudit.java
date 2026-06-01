@@ -36,6 +36,6 @@ public abstract class ModelAudit extends DateAudit {
     private String ipUpdated;
 
     @Schema(description = "Estado lógico: 1 activo, 0 eliminado")
-    @Column(name = "flg_state", nullable = false, columnDefinition = "CHAR(1)")
+    @Column(name = "flg_state", nullable = false, length = 1)
     private String flgState;
 }
