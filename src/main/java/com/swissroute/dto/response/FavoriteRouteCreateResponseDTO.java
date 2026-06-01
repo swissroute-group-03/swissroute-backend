@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "DTO de respuesta de una ruta favorita")
-public class RutaFavoritaResponseDTO {
+public class FavoriteRouteCreateResponseDTO {
 
     @Schema(description = "ID único de la ruta favorita", example = "1")
     private Long id;

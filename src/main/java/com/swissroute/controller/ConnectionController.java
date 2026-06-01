@@ -3,6 +3,7 @@ package com.swissroute.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,8 @@ public class ConnectionController {
             @RequestParam(required = false) String date,
             @RequestParam(required = false) String time,
             @RequestParam(required = false) String transportations,
-            @RequestParam(required = false) List<String> via) {
+            @RequestParam(required = false) List<String> via,
+            Authentication authentication) {
 
         List<String> viaFiltered = via;
         if (viaFiltered != null) {
@@ -47,7 +49,9 @@ public class ConnectionController {
             }
         }
 
-        List<ConnectionResponseDTO> conexiones = connectionUseCase.buscarConexiones(from, to, date, time, transportations, viaFiltered);
+        Long userId = (Long) authentication.getDetails();
+
+        List<ConnectionResponseDTO> conexiones = connectionUseCase.buscarConexiones(from, to, date, time, transportations, viaFiltered, userId);
         return ResponseEntity.ok(conexiones);
     }
 }

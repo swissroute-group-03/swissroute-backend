@@ -1,29 +1,43 @@
 package com.swissroute.controller;
 
 import com.swissroute.dto.request.FavoriteRouteRequestDTO;
+import com.swissroute.dto.request.FavoriteRouteCreateRequestDTO;
 import com.swissroute.dto.response.FavoriteRouteResponseDTO;
+import com.swissroute.dto.response.FavoriteRouteCreateResponseDTO;
 import com.swissroute.service.use_cases.FavoriteRouteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/rutas-favoritas")
 @RequiredArgsConstructor
 public class FavoriteRouteController {
 
     private final FavoriteRouteService favoriteRouteService;
 
 
-    @GetMapping("/rutas-favoritas")
+    @PostMapping
+    public ResponseEntity<FavoriteRouteCreateResponseDTO> guardarRutaFavorita(
+            @Valid @RequestBody FavoriteRouteCreateRequestDTO requestDTO,
+            Authentication authentication
+    ) {
+        Long userId = (Long) authentication.getDetails();
+
+        FavoriteRouteCreateResponseDTO response = favoriteRouteService.guardarRutaFavorita(
+                requestDTO,
+                userId
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
     public ResponseEntity<List<FavoriteRouteResponseDTO>> getFavoriteRoutes() {
 
         List<FavoriteRouteResponseDTO> routes = favoriteRouteService.getFavoriteRoutes();
@@ -31,7 +45,7 @@ public class FavoriteRouteController {
         return ResponseEntity.ok(routes);
     }
 
-    @PutMapping("/rutas-favoritas/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<FavoriteRouteResponseDTO> updateFavoriteRoute(
             @PathVariable Long id,
             @RequestBody FavoriteRouteRequestDTO request) {
@@ -41,7 +55,7 @@ public class FavoriteRouteController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/rutas-favoritas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFavoriteRoute(@PathVariable Long id) {
         favoriteRouteService.deleteFavoriteRoute(id);
         return ResponseEntity.noContent().build();
