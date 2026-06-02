@@ -1,0 +1,2424 @@
+{
+  "info": {
+    "_postman_id": "371aa6a0-6590-42bf-8855-c330fa5c28de",
+    "name": "SwissRoute API",
+    "description": "Documentación de los servicios REST del sistema SwissRoute para planificación y seguimiento de viajes en transporte público.\n\n**Funcionalidades principales:**\n- **Búsqueda de estaciones:** Por nombre o coordenadas geográficas.\n- **Conexiones:** Consulta de rutas entre estaciones con filtros.\n- **Tablón de salidas:** Salidas programadas en estaciones.\n- **Rutas favoritas:** Gestión de rutas favoritas del usuario (persistencia local y proxy externo).\n- **Estaciones favoritas:** CRUD de estaciones favoritas vía API externa.\n- **Autenticación:** Login y registro con JWT.\n\nDesarrollado por [José Saire](https://github.com/msxd26), [Alexandra](https://github.com/Alexandra9804) y [Diógenes Quintero](https://github.com/dio-quincarDev) como reto para la comunidad **BytesColaborativos**.\n\nContact Support:\n Name: José Saire, Alexandra Chavez y Diógenes Quintero",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27022158"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "rutas-favoritas",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Actualizar ruta favorita",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5219"
+                        }
+                      ]
+                    },
+                    "description": "Actualiza una ruta favorita existente mediante API externa"
+                  },
+                  "response": [
+                    {
+                      "name": "Ruta favorita actualizada",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 1,\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}"
+                    },
+                    {
+                      "name": "Solicitud inválida",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "La ruta no pertenece al usuario autenticado",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "Ruta favorita no encontrada",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "Servicio externo no disponible",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Eliminar ruta favorita",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5219"
+                        }
+                      ]
+                    },
+                    "description": "Elimina una ruta favorita mediante API externa"
+                  },
+                  "response": [
+                    {
+                      "name": "Ruta favorita eliminada exitosamente",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "La ruta no pertenece al usuario autenticado",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "Ruta favorita no encontrada",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "Servicio externo no disponible",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/rutas-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "rutas-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Service Unavailable",
+                      "code": 503,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Obtener rutas favoritas",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/rutas-favoritas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "rutas-favoritas"
+                  ]
+                },
+                "description": "Lista las rutas favoritas del usuario autenticado mediante API externa"
+              },
+              "response": [
+                {
+                  "name": "Lista de rutas favoritas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"name\": \"Home to Work\",\n  \"origin\": \"Madrid Chamartin\",\n  \"destination\": \"Barcelona Sants\",\n  \"transportType\": \"train\"\n}"
+                },
+                {
+                  "name": "No autenticado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                },
+                {
+                  "name": "Servicio externo no disponible",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Guardar ruta favorita",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"tipoTransporte\": \"train\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/rutas-favoritas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "rutas-favoritas"
+                  ]
+                },
+                "description": "Persiste una nueva ruta favorita en base de datos local asociada al usuario autenticado"
+              },
+              "response": [
+                {
+                  "name": "Ruta favorita creada exitosamente",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"tipoTransporte\": \"train\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"tipoTransporte\": \"train\",\n  \"userId\": 1,\n  \"createdAt\": \"2026-05-28T10:30:00\",\n  \"updatedAt\": \"2026-05-28T11:00:00\"\n}"
+                },
+                {
+                  "name": "Datos de entrada inválidos",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"tipoTransporte\": \"train\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                },
+                {
+                  "name": "No autenticado",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"tipoTransporte\": \"train\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                },
+                {
+                  "name": "Ya existe una ruta favorita con ese nombre para el usuario",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"destinoId\": \"008501008\",\n  \"destinoNombre\": \"Genève\",\n  \"nombre\": \"Ruta a la universidad\",\n  \"origenId\": \"008501120\",\n  \"origenNombre\": \"Lausanne\",\n  \"tipoTransporte\": \"train\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/rutas-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "rutas-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "usuarios",
+          "item": [
+            {
+              "name": "registro",
+              "item": [
+                {
+                  "name": "Registrar usuarios",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"juan@gmail.com\",\n  \"name\": \"Juan\",\n  \"password\": \"ClaveSegura123!\",\n  \"id\": 1,\n  \"ciudadBase\": \"Zurich\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios/registro",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios",
+                        "registro"
+                      ]
+                    },
+                    "description": "Servicio encargado de registar usuarios"
+                  },
+                  "response": [
+                    {
+                      "name": "Created",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"juan@gmail.com\",\n  \"name\": \"Juan\",\n  \"password\": \"ClaveSegura123!\",\n  \"id\": 1,\n  \"ciudadBase\": \"Zurich\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/usuarios/registro",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "usuarios",
+                            "registro"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 1,\n  \"name\": \"Juan\",\n  \"email\": \"juan@gmail.com\",\n  \"ciudadBase\": \"string\",\n  \"signUpDate\": \"2021-02-20\",\n  \"role\": {\n    \"id\": 1,\n    \"name\": \"CLIENT\",\n    \"description\": \"Rol con permisos para crear y ver pedidos\"\n  }\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "login",
+              "item": [
+                {
+                  "name": "Validar credenciales",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"juan@gmail.com\",\n  \"password\": \"ClaveSegura123!\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios",
+                        "login"
+                      ]
+                    },
+                    "description": "Servicio encargado de validar las credenciales de acceso del usuario"
+                  },
+                  "response": [
+                    {
+                      "name": "Autenticación exitosa",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"juan@gmail.com\",\n  \"password\": \"ClaveSegura123!\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/usuarios/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "usuarios",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"username\": \"juan@gmail.com\",\n  \"message\": \"Usuario autenticado correctamente\",\n  \"jwt\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"status\": true\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "estaciones-favoritas",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Eliminar estación favorita",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5219"
+                        }
+                      ]
+                    },
+                    "description": "Elimina una estación favorita por ID mediante API externa"
+                  },
+                  "response": [
+                    {
+                      "name": "Estación favorita eliminada exitosamente",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/estaciones-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "estaciones-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "No autenticado",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/estaciones-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "estaciones-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    },
+                    {
+                      "name": "Estación favorita no encontrada",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/estaciones-favoritas/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "estaciones-favoritas",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Obtener estaciones favoritas",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "estaciones-favoritas"
+                  ]
+                },
+                "description": "Lista las estaciones favoritas del usuario mediante API externa"
+              },
+              "response": [
+                {
+                  "name": "Lista de estaciones favoritas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}"
+                },
+                {
+                  "name": "No autenticado",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Crear estación favorita",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "estaciones-favoritas"
+                  ]
+                },
+                "description": "Guarda una nueva estación favorita mediante API externa"
+              },
+              "response": [
+                {
+                  "name": "Estación favorita creada exitosamente",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}"
+                },
+                {
+                  "name": "Solicitud inválida",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                },
+                {
+                  "name": "No autenticado",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalStationId\": \"string\",\n  \"stationName\": \"Madrid Chamartín\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones-favoritas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones-favoritas"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "tablon",
+          "item": [
+            {
+              "name": "Consultar tablón de salidas",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/tablon?station=Lausanne&limit=10&type=train",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "tablon"
+                  ],
+                  "query": [
+                    {
+                      "key": "station",
+                      "value": "Lausanne",
+                      "description": "Nombre de la estación"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Cantidad máxima de resultados"
+                    },
+                    {
+                      "key": "type",
+                      "value": "train",
+                      "description": "Tipo de transporte (train, bus, tram, etc.)"
+                    }
+                  ]
+                },
+                "description": "Obtiene las salidas programadas de una estación, con filtro opcional por tipo de transporte"
+              },
+              "response": [
+                {
+                  "name": "Lista de salidas programadas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/tablon?station=Lausanne&limit=10&type=train",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "tablon"
+                      ],
+                      "query": [
+                        {
+                          "description": "Nombre de la estación",
+                          "key": "station",
+                          "value": "Lausanne"
+                        },
+                        {
+                          "description": "Cantidad máxima de resultados",
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "description": "Tipo de transporte (train, bus, tram, etc.)",
+                          "key": "type",
+                          "value": "train"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"serviceName\": \"RE9\",\n  \"category\": \"train\",\n  \"finalDestination\": \"Madrid Chamartín\",\n  \"departureTime\": \"2026-05-28T10:30:00\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "historial",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "delete History By Id",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/historial/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "historial",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5219"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/historial/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "historial",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5219"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "get History",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/historial?page=0&size=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "historial"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/historial?page=0&size=10",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "historial"
+                      ],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"content\": [\n    {\n      \"id\": 4731,\n      \"origen\": \"string\",\n      \"destino\": \"string\",\n      \"fechaConsulta\": \"1984-03-16T00:19:56.564Z\",\n      \"numResultados\": 3824,\n      \"userId\": 4375\n    },\n    {\n      \"id\": 5811,\n      \"origen\": \"string\",\n      \"destino\": \"string\",\n      \"fechaConsulta\": \"2016-01-17T00:35:32.007Z\",\n      \"numResultados\": 175,\n      \"userId\": 4273\n    }\n  ],\n  \"page\": 9871,\n  \"size\": 3990,\n  \"totalElements\": 5708,\n  \"totalPages\": 1661,\n  \"last\": false\n}"
+                }
+              ]
+            },
+            {
+              "name": "delete All History",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/historial",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "historial"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/historial",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "historial"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "estaciones",
+          "item": [
+            {
+              "name": "Buscar estaciones",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/estaciones?query=Lausanne&x=46.517&y=6.634&limite=15",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "estaciones"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "Lausanne",
+                      "description": "Texto de búsqueda por nombre de estación"
+                    },
+                    {
+                      "key": "x",
+                      "value": "46.517",
+                      "description": "Latitud para búsqueda por coordenadas (debe estar entre -90 y 90)"
+                    },
+                    {
+                      "key": "y",
+                      "value": "6.634",
+                      "description": "Longitud para búsqueda por coordenadas (debe estar entre -180 y 180)"
+                    },
+                    {
+                      "key": "limite",
+                      "value": "15",
+                      "description": "Cantidad máxima de resultados"
+                    }
+                  ]
+                },
+                "description": "Busca estaciones por nombre o por coordenadas geográficas (latitud/longitud). No se pueden enviar ambos criterios simultáneamente."
+              },
+              "response": [
+                {
+                  "name": "Lista de estaciones encontradas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones?query=Lausanne&x=46.517&y=6.634&limite=15",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones"
+                      ],
+                      "query": [
+                        {
+                          "description": "Texto de búsqueda por nombre de estación",
+                          "key": "query",
+                          "value": "Lausanne"
+                        },
+                        {
+                          "description": "Latitud para búsqueda por coordenadas (debe estar entre -90 y 90)",
+                          "key": "x",
+                          "value": "46.517"
+                        },
+                        {
+                          "description": "Longitud para búsqueda por coordenadas (debe estar entre -180 y 180)",
+                          "key": "y",
+                          "value": "6.634"
+                        },
+                        {
+                          "description": "Cantidad máxima de resultados",
+                          "key": "limite",
+                          "value": "15"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"nombre\": \"Lausanne\",\n  \"latitud\": 46.517,\n  \"longitud\": 6.634,\n  \"distance\": 150.5\n}"
+                },
+                {
+                  "name": "Parámetros inválidos (coordenadas fuera de rango, query y coordenadas simultáneos, o falta de parámetros)",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/estaciones?query=Lausanne&x=46.517&y=6.634&limite=15",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "estaciones"
+                      ],
+                      "query": [
+                        {
+                          "description": "Texto de búsqueda por nombre de estación",
+                          "key": "query",
+                          "value": "Lausanne"
+                        },
+                        {
+                          "description": "Latitud para búsqueda por coordenadas (debe estar entre -90 y 90)",
+                          "key": "x",
+                          "value": "46.517"
+                        },
+                        {
+                          "description": "Longitud para búsqueda por coordenadas (debe estar entre -180 y 180)",
+                          "key": "y",
+                          "value": "6.634"
+                        },
+                        {
+                          "description": "Cantidad máxima de resultados",
+                          "key": "limite",
+                          "value": "15"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "string"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "conexiones",
+          "item": [
+            {
+              "name": "Buscar conexiones",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/conexiones?from=Lausanne&to=Genève&date=2026-06-15&time=14:30&transportations=train,bus&via=Bern&via=Zürich",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "conexiones"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "Lausanne",
+                      "description": "Estación de origen"
+                    },
+                    {
+                      "key": "to",
+                      "value": "Genève",
+                      "description": "Estación de destino"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2026-06-15",
+                      "description": "Fecha del viaje (formato: YYYY-MM-DD)"
+                    },
+                    {
+                      "key": "time",
+                      "value": "14:30",
+                      "description": "Hora del viaje (formato: HH:mm)"
+                    },
+                    {
+                      "key": "transportations",
+                      "value": "train,bus",
+                      "description": "Tipos de transporte permitidos separados por coma"
+                    },
+                    {
+                      "key": "via",
+                      "value": "Bern",
+                      "description": "Paradas intermedias (máximo 5)"
+                    },
+                    {
+                      "key": "via",
+                      "value": "Zürich",
+                      "description": "Paradas intermedias (máximo 5)"
+                    }
+                  ]
+                },
+                "description": "Busca conexiones entre dos estaciones con filtros opcionales de fecha, hora, tipo de transporte y paradas intermedias"
+              },
+              "response": [
+                {
+                  "name": "Lista de conexiones encontradas",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/conexiones?from=Lausanne&to=Genève&date=2026-06-15&time=14:30&transportations=train,bus&via=Zürich",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "conexiones"
+                      ],
+                      "query": [
+                        {
+                          "description": "Estación de origen",
+                          "key": "from",
+                          "value": "Lausanne"
+                        },
+                        {
+                          "description": "Estación de destino",
+                          "key": "to",
+                          "value": "Genève"
+                        },
+                        {
+                          "description": "Fecha del viaje (formato: YYYY-MM-DD)",
+                          "key": "date",
+                          "value": "2026-06-15"
+                        },
+                        {
+                          "description": "Hora del viaje (formato: HH:mm)",
+                          "key": "time",
+                          "value": "14:30"
+                        },
+                        {
+                          "description": "Tipos de transporte permitidos separados por coma",
+                          "key": "transportations",
+                          "value": "train,bus"
+                        },
+                        {
+                          "description": "Paradas intermedias (máximo 5)",
+                          "key": "via",
+                          "value": "Zürich"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"origen\": \"Lausanne\",\n  \"destino\": \"Genève\",\n  \"duracion\": \"00:42:00\",\n  \"productos\": [\n    \"train\",\n    \"bus\"\n  ],\n  \"secciones\": [\n    {\n      \"origen\": \"Lausanne\",\n      \"destino\": \"Genève\",\n      \"salida\": \"2026-05-28T10:30:00\",\n      \"llegada\": \"2026-05-28T11:12:00\",\n      \"transporte\": \"IC1\",\n      \"tipo\": \"train\"\n    },\n    {\n      \"origen\": \"Lausanne\",\n      \"destino\": \"Genève\",\n      \"salida\": \"2026-05-28T10:30:00\",\n      \"llegada\": \"2026-05-28T11:12:00\",\n      \"transporte\": \"IC1\",\n      \"tipo\": \"train\"\n    }\n  ]\n}"
+                },
+                {
+                  "name": "Parámetros inválidos (ej. más de 5 paradas intermedias)",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/conexiones?from=Lausanne&to=Genève&date=2026-06-15&time=14:30&transportations=train,bus&via=Zürich",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "conexiones"
+                      ],
+                      "query": [
+                        {
+                          "description": "Estación de origen",
+                          "key": "from",
+                          "value": "Lausanne"
+                        },
+                        {
+                          "description": "Estación de destino",
+                          "key": "to",
+                          "value": "Genève"
+                        },
+                        {
+                          "description": "Fecha del viaje (formato: YYYY-MM-DD)",
+                          "key": "date",
+                          "value": "2026-06-15"
+                        },
+                        {
+                          "description": "Hora del viaje (formato: HH:mm)",
+                          "key": "time",
+                          "value": "14:30"
+                        },
+                        {
+                          "description": "Tipos de transporte permitidos separados por coma",
+                          "key": "transportations",
+                          "value": "train,bus"
+                        },
+                        {
+                          "description": "Paradas intermedias (máximo 5)",
+                          "key": "via",
+                          "value": "Zürich"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"timestamp\": \"1996-05-16T03:35:43.900Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Recurso no encontrado\",\n  \"path\": \"/api/estaciones\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
