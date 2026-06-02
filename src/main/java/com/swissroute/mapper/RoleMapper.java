@@ -3,8 +3,8 @@ package com.swissroute.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import com.swissroute.dto.RoleRequestDTO;
-import com.swissroute.dto.RoleResponseDTO;
+import com.swissroute.dto.request.RoleRequestDTO;
+import com.swissroute.dto.response.RoleResponseDTO;
 import com.swissroute.model.Role;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

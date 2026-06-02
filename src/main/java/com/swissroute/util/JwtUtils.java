@@ -29,25 +29,26 @@ public class JwtUtils {
     @Value("${security.jwt.expiration-ms}")
     private Long expirationMs;
 
-    public String createToken(Authentication authentication){
+    public String createToken(Authentication authentication, Long userId){
         Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
         String username = authentication.getPrincipal().toString();
         String authorities = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(",")); 
-        
+                .collect(Collectors.joining(","));
+
         String jwtToken = JWT.create()
                 .withIssuer(this.userGenerator)
                 .withSubject(username)
+                .withClaim("userId", userId)
                 .withClaim("authorities", authorities)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationMs))
                 .withJWTId(UUID.randomUUID().toString())
                 .withNotBefore(new Date(System.currentTimeMillis()))
                 .sign(algorithm);
-                
+
         return jwtToken;
 
     }
@@ -67,6 +68,10 @@ public class JwtUtils {
 
     public String extractUsername(DecodedJWT decodedJWT){
         return decodedJWT.getSubject().toString();
+    }
+
+    public Long extractUserId(DecodedJWT decodedJWT) {
+        return decodedJWT.getClaim("userId").asLong();
     }
 
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName){

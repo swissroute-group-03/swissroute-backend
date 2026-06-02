@@ -2,6 +2,8 @@ package com.swissroute.service;
 
 import com.swissroute.constant.ExceptionMessagesConstants;
 import com.swissroute.constant.ResponseMessagesConstants;
+import com.swissroute.model.User;
+import com.swissroute.repository.UserRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.swissroute.dto.AuthRequestDTO;
-import com.swissroute.dto.AuthResponseDTO;
+import com.swissroute.dto.request.AuthRequestDTO;
+import com.swissroute.dto.response.AuthResponseDTO;
 import com.swissroute.service.use_cases.AuthUseCase;
 import com.swissroute.util.JwtUtils;
 
@@ -20,15 +22,15 @@ import com.swissroute.util.JwtUtils;
 public class AuthServiceImpl implements AuthUseCase {
 
     private PasswordEncoder passwordEncoder;
-
     private JwtUtils jwtUtils;
-
     private UserDetailsService userDetailsUseCase;
+    private final UserRepository userRepository;
 
-    public AuthServiceImpl(PasswordEncoder passwordEncoder, JwtUtils jwtUtils, UserDetailsService userDetailsUseCase){
+    public AuthServiceImpl(PasswordEncoder passwordEncoder, JwtUtils jwtUtils, UserDetailsService userDetailsUseCase, UserRepository userRepository){
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.userDetailsUseCase = userDetailsUseCase;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -39,7 +41,10 @@ public class AuthServiceImpl implements AuthUseCase {
         Authentication authentication = this.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String accestoken = jwtUtils.createToken(authentication);
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new BadCredentialsException(ExceptionMessagesConstants.CREDENCIALES_INVALIDAS));
+
+        String accestoken = jwtUtils.createToken(authentication, user.getId());
 
         AuthResponseDTO authResponseDTO = new AuthResponseDTO(username, ResponseMessagesConstants.LOGIN_EXITOSO, accestoken, true);
 

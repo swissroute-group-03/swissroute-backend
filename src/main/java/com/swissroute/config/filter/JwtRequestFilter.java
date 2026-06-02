@@ -35,38 +35,44 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             @Nonnull HttpServletResponse response,
             @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
-        String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (jwtToken != null) {
-            jwtToken = jwtToken.substring(7);
+        if (header != null && header.startsWith("Bearer ")) {
+            String jwtToken = header.substring(7);
 
-            DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
+            try {
+                DecodedJWT decodedJWT = jwtUtils.validateToken(jwtToken);
 
-            String username = jwtUtils.extractUsername(decodedJWT);
-            String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
+                String username = jwtUtils.extractUsername(decodedJWT);
+                Long userId = jwtUtils.extractUserId(decodedJWT);
+                String stringAuthorities = jwtUtils.getSpecificClaim(decodedJWT, "authorities").asString();
 
-            Collection<? extends GrantedAuthority> authorities = AuthorityUtils
-                    .commaSeparatedStringToAuthorityList(stringAuthorities);
+                Collection<? extends GrantedAuthority> authorities = AuthorityUtils
+                        .commaSeparatedStringToAuthorityList(stringAuthorities);
 
-            SecurityContext context = SecurityContextHolder.getContext();
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
-            context.setAuthentication(authentication);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                authentication.setDetails(userId);
+                context.setAuthentication(authentication);
 
-            SecurityContextHolder.setContext(context);
+                SecurityContextHolder.setContext(context);
 
-            HttpServletRequest wrappedRequest = new HttpServletRequestWrapper(request) {
-                @Override
-                public String getHeader(String name) {
-                    if ("X-User-Email".equalsIgnoreCase(name)) {
-                        return username;
+                HttpServletRequest wrappedRequest = new HttpServletRequestWrapper(request) {
+                    @Override
+                    public String getHeader(String name) {
+                        if ("X-User-Email".equalsIgnoreCase(name)) {
+                            return username;
+                        }
+                        return super.getHeader(name);
                     }
-                    return super.getHeader(name);
-                }
-            };
+                };
 
-            filterChain.doFilter(wrappedRequest, response); 
-            return;
+                filterChain.doFilter(wrappedRequest, response);
+                return;
+            } catch (Exception e) {
+                SecurityContextHolder.clearContext();
+            }
         }
 
         filterChain.doFilter(request, response);

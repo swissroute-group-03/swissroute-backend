@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.swissroute.dto.RoleResponseDTO;
+import com.swissroute.dto.response.RoleResponseDTO;
 import com.swissroute.mapper.RoleMapper;
 import com.swissroute.repository.RoleRepository;
 import com.swissroute.service.use_cases.RoleUseCase;

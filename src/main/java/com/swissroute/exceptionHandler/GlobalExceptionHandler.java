@@ -2,7 +2,9 @@ package com.swissroute.exceptionHandler;
 
 import java.time.LocalDateTime;
 
+import com.swissroute.exceptionHandler.exceptions.BadRequestException;
 import com.swissroute.exceptionHandler.exceptions.ConflictException;
+import com.swissroute.exceptionHandler.exceptions.TransportApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.swissroute.exceptionHandler.exceptions.ResourceNotFoundException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
     
     @ExceptionHandler
-    public ResponseEntity<ErrorDetails> handleConflictException(ResourceNotFoundException resourceNotFoundException, HttpServletRequest request){
+    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException resourceNotFoundException, HttpServletRequest request){
         return new ResponseEntity<>(
             new ErrorDetails(
                 LocalDateTime.now(),
@@ -27,6 +30,19 @@ public class GlobalExceptionHandler {
                 resourceNotFoundException.getMessage(),
                 request.getRequestURI()
             ), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException ex, HttpServletRequest request){
+        return new ResponseEntity<>(
+            new ErrorDetails(
+                LocalDateTime.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Forbidden",
+                "Acceso denegado: No tienes permisos para realizar esta acción",
+                request.getRequestURI()
+            ), HttpStatus.FORBIDDEN
+        );
     }
 
     @ExceptionHandler
@@ -69,6 +85,58 @@ public class GlobalExceptionHandler {
                         request.getRequestURI()
                 ),
                 HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleTransportApiException(
+            TransportApiException ex,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        ex.getStatus(),
+                        "External API Error",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ),
+                HttpStatus.valueOf(ex.getStatus())
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException ex,
+            HttpServletRequest request
+    ) {
+        String mensaje = "El parámetro '" + ex.getName() + "' debe ser un valor numérico válido";
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
+                        mensaje,
+                        request.getRequestURI()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorDetails> handleBadRequestException(
+            BadRequestException ex,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(
+                new ErrorDetails(
+                        LocalDateTime.now(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ),
+                HttpStatus.BAD_REQUEST
         );
     }
 }
