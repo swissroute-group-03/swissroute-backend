@@ -35,7 +35,7 @@ public class SwaggerConfig {
                                 + "[Diógenes Quintero](https://github.com/dio-quincarDev) "
                                 + "como reto para la comunidad **BytesColaborativos**.")
                         .contact(new Contact()
-                                .name("José Saire, Alexandra y Diógenes Quintero")
+                                .name("José Saire, Alexandra Chavez y Diógenes Quintero")
                                 .url("https://github.com/swissroute-group-03/swissroute-backend"))
                         .license(new License()
                                 .name("Apache 2.0")
